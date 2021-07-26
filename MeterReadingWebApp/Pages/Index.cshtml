@@ -1,0 +1,78 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Upload Meter Readings";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <form method="post" class="form-inline" enctype="multipart/form-data">
+        <div class="container">
+            <div class="row p-2">
+                <div class="form-group col-auto">
+                    <label asp-for="MeterReadings">Upload Meter Readings:</label>
+                </div>
+                <div class="col-auto">
+                    <input asp-for="MeterReadings" type="file" />
+                </div>
+            </div>
+
+            <div class="row p-2">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Upload</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@if (Model.ReadingReponse != null)
+{
+    @if (Model.ReadingReponse.SuccessfulReadings.Count > 0)
+    {
+        <h2>Successful Readings</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Account Id</th>
+                    <th>Reading DateTime</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ReadingReponse.SuccessfulReadings)
+                {
+                    <tr>
+                        <td>@item.AccountId</td>
+                        <td>@item.MeterReadingDateTime</td>
+                        <td>@item.MeterReadValue</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (Model.ReadingReponse.FailedReadings.Count > 0)
+    {
+        <h2>Failed Readings</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Account Id</th>
+                    <th>Reading DateTime</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ReadingReponse.FailedReadings)
+                {
+                    <tr>
+                        <td>@item.AccountId</td>
+                        <td>@item.MeterReadingDateTime</td>
+                        <td>@item.MeterReadValue</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
